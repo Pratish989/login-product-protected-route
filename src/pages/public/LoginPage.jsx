@@ -6,38 +6,32 @@ import { useNavigate, redirect } from "react-router-dom";
 let staticEmail = "admin";
 
 function LoginPage() {
-  // const { login , authed, setAuthed } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [error, setError] = useState(false);
-  const [token,setToken] = useState("")
-
+  const [token,setToken] = useState(" ")
   console.log(token)
+
   const handleChange = (event) => {
     setEmail(event.target.value);
   };
 
-  
-  useEffect(()=>{
-
-  })
   const handleLogin = (event) => {
     event.preventDefault();
     if (email === staticEmail) {
-      alert("email validated");
-      // localStorage.setItem("token", "Login Token");
+      setToken("login token")
       setToken(localStorage.setItem("token","login token"))
       setError(false);
-      console.log(history);
+      console.log(token)
       navigate("/home");
+      navigate(0)
+      history.push()
     } else {
       setError(true);
     }
   };    
-
   return (
     <div>
-      {/* <h1>asdasd</h1> */}
       <label htmlFor="email">Email Address</label>
       <input type="email" value={email} onChange={handleChange} />
       <br />
@@ -49,3 +43,4 @@ function LoginPage() {
   );
 }
 export default LoginPage;
+
