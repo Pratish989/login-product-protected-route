@@ -1,4 +1,4 @@
-import "./App.css";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AboutPage from "./pages/public/AboutPage";
 import LoginPage from "./pages/public/LoginPage";
@@ -10,35 +10,49 @@ import RequireAuth from "./RequireAuth";
 import ErrorPage from "./pages/public/ErrorPage";
 import SingleProductPage from "./pages/private/SingleProductPage";
 import HomePage from "./pages/public/HomePage";
-// import NavigationPage from "./pages/public/NavigationBar";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    localStorage.getItem("token") !== null
+  );
+
+  const handleLogin = () => {
+    localStorage.setItem("token", "login token");
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+  };
+
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<NavigationBar/>}>
-            <Route path="home" element={<HomePage/>}></Route>
-            <Route path="about" element={<AboutPage />}></Route>
-            <Route path="contact" element={<ContactPage />}></Route>
-            <Route path="login" element={<LoginPage />}></Route>
+          <Route
+            path="/"
+            element={<NavigationBar isAuthenticated={isAuthenticated} />}
+          >
+            <Route path="home" element={<HomePage />} />
+            <Route path="about" element={<AboutPage />} />
+            <Route path="contact" element={<ContactPage />} />
+            <Route path="login" element={<LoginPage onLogin={handleLogin} />} />
             <Route
               path="product"
               element={
-                <RequireAuth>
+                <RequireAuth isAuthenticated={isAuthenticated}>
                   <ProductPage />
                 </RequireAuth>
               }
-            ></Route>
-
+            />
+            <Route path="product/:productId" element={<SingleProductPage />} />
             <Route
-              path="product/:productId"
-              element={<SingleProductPage />}
-            ></Route>
-
-            <Route path="logout" element={<LogoutPage />}></Route>
-            <Route path="*" element={<ErrorPage />}></Route>
-          </Route>  
+              path="logout"
+              element={<LogoutPage onLogout={handleLogout} />}
+            />
+            <Route path="*" element={<ErrorPage />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
