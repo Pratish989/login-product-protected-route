@@ -25,13 +25,13 @@ const registeredUsers = [
   },
 ];
 
-console.log(registeredUsers)
+console.log(registeredUsers);
 
 function Button() {
   return <button className="login-form">Login</button>;
 }
 
-function Input(props) { 
+function Input(props) {
   return (
     <input
       type={props.type}
@@ -39,13 +39,14 @@ function Input(props) {
       placeholder={props.placeholder}
       onChange={props.onChange}
       required={props.required}
+      onBlur={props.onBlur}
+      
     />
   );
 }
 
-
-function LoginPage({onLogin}) {
-  const navigate = useNavigate()
+function LoginPage({ onLogin }) {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
@@ -53,8 +54,9 @@ function LoginPage({onLogin}) {
 
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
   const isValidEmail = emailRegex.test(email);
- 
-  const passwordRegex =/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/;
+
+  const passwordRegex =
+    /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/;
   const isValidPassword = passwordRegex.test(password);
 
   const submitLogin = (event) => {
@@ -74,30 +76,46 @@ function LoginPage({onLogin}) {
       console.log("both fields validated");
     }
 
-    registeredUsers.forEach(({email: registeredEmail, password: registeredPassword})=>{
-      if(registeredEmail === email && registeredPassword === password){
-        console.log("logged in");
-        onLogin();
-        navigate("/home");
+    registeredUsers.forEach(
+      ({ email: registeredEmail, password: registeredPassword }) => {
+        if (registeredEmail === email && registeredPassword === password) {
+          console.log("logged in");
+          onLogin();
+          navigate("/home");
+        }
       }
-    })
+    );
+  }
 
-  };
+
+  const InputStyleEmail = {
+    borderColor : emailError ? 'green' : 'red'
+  } 
+
+  const InputStylePassword = {
+    borderColor : passwordError ? 'green' : 'red'
+  }
 
   return (
     <div className="login-form">
-
       <h2>Login Form 💼</h2>
       <form onSubmit={submitLogin}>
         <Input
           type="email"
           value={email}
           placeholder="Email"
+          // onBlur = {(e) =>  {
+          //   if (e.target.value === '') {
+          //     e.target.style.borderColor = 'red';
+          //   } else {
+          //     e.target.style.borderColor = 'black';
+          //   }
+          // } }
           onChange={(event) => setEmail(event.target.value)}
-          style={{ borderColor: emailError ? "red" : "black" }}
+          style = {InputStyleEmail}
           required
         />
-        {emailError && <p style={{color: "red"}}>Invalid Email Format</p>}
+        {emailError && <p style={{ color: "red" }}>Invalid Email Format</p>}
         <br />
         <Input
           type="password"
@@ -105,8 +123,19 @@ function LoginPage({onLogin}) {
           placeholder="Password"
           onChange={(event) => setPassword(event.target.value)}
           required
+          // onBlur = {(e) =>  {
+          //   if (e.target.value === '') {
+          //     e.target.style.borderColor = 'red';
+          //   } else {
+          //     e.target.style.borderColor = 'black';
+          //   }
+          // } }
+          style = {InputStylePassword}
+
         />
-        {passwordError && <p style={{color: "red"}}>Invalid Password Format</p>}
+        {passwordError && (
+          <p style={{ color: "red" }}>Invalid Password Format</p>
+        )}
         <br />
         <Button />
       </form>
@@ -115,4 +144,8 @@ function LoginPage({onLogin}) {
 }
 
 export default LoginPage;
+
+
+// - if the email and password is valid but that doesnt match any of the email and password 
+// in registeredUsers Array, then give error message
 
