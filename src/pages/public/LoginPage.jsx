@@ -40,7 +40,7 @@ function Input(props) {
       onChange={props.onChange}
       required={props.required}
       onBlur={props.onBlur}
-      
+      style={props.style} 
     />
   );
 }
@@ -85,16 +85,15 @@ function LoginPage({ onLogin }) {
         }
       }
     );
-  }
-
+  };
 
   const InputStyleEmail = {
-    borderColor : emailError ? 'green' : 'red'
-  } 
+    borderColor: emailError ? "red" : "black",
+  };
 
   const InputStylePassword = {
-    borderColor : passwordError ? 'green' : 'red'
-  }
+    borderColor: passwordError ? "red" : "black",
+  };
 
   return (
     <div className="login-form">
@@ -104,15 +103,8 @@ function LoginPage({ onLogin }) {
           type="email"
           value={email}
           placeholder="Email"
-          // onBlur = {(e) =>  {
-          //   if (e.target.value === '') {
-          //     e.target.style.borderColor = 'red';
-          //   } else {
-          //     e.target.style.borderColor = 'black';
-          //   }
-          // } }
           onChange={(event) => setEmail(event.target.value)}
-          style = {InputStyleEmail}
+          style={InputStyleEmail}
           required
         />
         {emailError && <p style={{ color: "red" }}>Invalid Email Format</p>}
@@ -123,15 +115,7 @@ function LoginPage({ onLogin }) {
           placeholder="Password"
           onChange={(event) => setPassword(event.target.value)}
           required
-          // onBlur = {(e) =>  {
-          //   if (e.target.value === '') {
-          //     e.target.style.borderColor = 'red';
-          //   } else {
-          //     e.target.style.borderColor = 'black';
-          //   }
-          // } }
-          style = {InputStylePassword}
-
+          style={InputStylePassword}
         />
         {passwordError && (
           <p style={{ color: "red" }}>Invalid Password Format</p>
@@ -144,8 +128,3 @@ function LoginPage({ onLogin }) {
 }
 
 export default LoginPage;
-
-
-// - if the email and password is valid but that doesnt match any of the email and password 
-// in registeredUsers Array, then give error message
-
