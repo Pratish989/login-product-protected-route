@@ -29,11 +29,11 @@ text{
 a {
   text-decoration: none;
   color: #8f8f8f;
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 100;
   transition: all 0.5s ease-in-out;
   position: relative;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 
   &::before {
     content: attr(data-item);
@@ -57,12 +57,16 @@ a {
 }
 
 
+.section{
+  justify-content: center ;
+  text-align: center;
+}
+
 p {
   margin: 1px;
-  font-size:  16px;
+  font-size:  15px;
   color: #000000;
-  text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 100;
   transition: all 1s ease-in-out;
   position: relative;
 
@@ -86,7 +90,6 @@ p {
   }
 }
 
-
 .footer {
   position: absolute;
   background-color:#9f9e9f;
@@ -99,8 +102,6 @@ p {
   font-size: 16px;
   font-family: 'Rubik', sans-serif;
 }
-
-
 
 button {
   --color: #9361ea;
@@ -144,6 +145,36 @@ button {
   border-radius: 5px;
   text-align: center;
 }
+
+
+.login-form input:user-valid {
+  width: 330px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.login-form input:hover {
+  width: 330px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  text-align: center;
+}
+
+
+
+/* .login-form input:valid{
+  width: 330px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #00ee34;
+  border-radius: 5px;
+  text-align: center;
+}  */
 
 .login-form button {
   padding: 10px;
